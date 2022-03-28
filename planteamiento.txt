@@ -1,0 +1,54 @@
+- Pensar como hacer cada una de las funcionalidades
+
+- Vamos a necesitar escuchar lo que pulsa el usuario
+- Vamos a necesitar hacer un fetch para traernos el JSON
+- Necesitamos generar tantos ___ como letras tiene la peli
+- Cada vez que pulsamos una letra debe aparecer 'abajo' para saber las letras
+que hemos probado yo. 
+  - Si la letra pulsada es correcta:
+      - Cambiar el * por la letra pulsada en la posición de la palabra (string) que toque.
+      - Alternativas para saber si has ganado: que la variable de estado "guessedMovie" es 
+      igual a la película adivinar
+      - Actualizar el DOM para plasmar los cambios
+      - Si hemos ganado (GAME_STATUS==1)
+            - ir a buscar la imagen de la película de una API 
+            - sonido de victoria
+            - Quitar toda la interfaz salvo el botón de Reset
+- Para el numero de intentos: si ya hay una letra pulsada, no debe computar como erroneo
+en el caso de que falle de nuevo o bien pulse una letra que ya ha salido. 
+   - si la letra que ha pulsado usuario esta en el array de letras probadas NO debe computar
+     como error. 
+   - si la letra que ha pulsado usuario NO está en el array de letras probadas y dicha letra
+     NO forma parte de la película a advinar, debe computar como error.
+        - Decrementar el número de intentos disponibles
+        - Cuando el numero de intentos es 0; hemos perdido; musica 'game over', mensaje de 
+         DERROTA; evitar que el usuario siga poniendo letras.
+        - Actualizar el DOM para plasmar los cambios
+
+ 
+
+- Si hacemos clic en Reset: empezar de nuevo
+   1. Buscar una nueva película al azar
+   2. Actualizar el DOM. Número de intentos de 5.
+   3. guessedMovie = ""
+   4. numeroIntentos = 0
+   Método NO AJAX -->(window.location.reload())
+
+ 
+
+
+- Estado de la app ?
+   - Pelicula a adivinar
+        - fetch de la lista de películas de la URL que está app.js
+        - hay que escoger una peli al azar. Es un array de objetos; entonces tenemos que 
+          calcular una posición al azar de este array.
+   - Array con las letras que el usuario ya ha pulsado
+   - (valorar) si usar una variable para guardar t*e mat***
+   - Número de intentos
+   - GAME_STATUS : 0-> estoy jugando, -1: he perdido, 1: he ganado
+-----------------------------------------------------------
+
+ 
+
+5 min escribir lo que necesitamos hacer en función de las funcionalidades 
+y de la demo que hemos visto
