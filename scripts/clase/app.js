@@ -2,6 +2,7 @@
 
 // Obtener las películas de
 // https://raw.githubusercontent.com/hjorturlarsen/IMDB-top-100/master/data/movies.json
+// Juan Pablo: OJO Cuidao, hay películas con ":", "accentos", números
 
 // Alternativa: encuentrame todo lo que NO sea un espacio en blanco, y cámbialo por un *
 //let movieGuess = movie.replaceAll(/[^\s]/g, "*");
@@ -29,11 +30,42 @@ DOM.updateGuessedWord(STATE.movieGuess);
  */
 
 document.addEventListener("keyup", function (e) {
+
+    if (STATE.attempts == 0 || STATE.movieGuess == STATE.movie) {
+        return;
+    }
+
     let keyPressed = e.key.toLowerCase();
     if (!/^[a-z]$/i.test(keyPressed)) {
         // esto no es una letra de la a la z
 
         return;
+    }
+
+    let isCorrect = STATE.movie.includes(keyPressed);
+    let hasAlreadyBeenPressed = STATE.checkedLetters.includes(keyPressed);
+
+    if (!isCorrect || hasAlreadyBeenPressed) {
+        STATE.attempts--;
+        DOM.updateAttempts(STATE.attempts);
+
+        if (STATE.attempts == 0) {
+            // hemos perdido
+            DOM.showLooserMessage();
+            const audio = new Audio('../sounds/lost.wav');
+            audio.play();
+        }
+    }
+
+
+    if (!hasAlreadyBeenPressed) {
+
+        // Es correcta la letra pulsada?
+
+        STATE.checkedLetters.push(keyPressed);
+        DOM.addGuessedLetter(keyPressed, isCorrect);
+
+
     }
 
     for (let i = 0; i < STATE.movie.length; i++) {
@@ -43,6 +75,15 @@ document.addEventListener("keyup", function (e) {
             STATE.movieGuess = STATE.movieGuess.slice(0, i) + keyPressed + STATE.movieGuess.slice(i + 1);
         }
 
+    }
+
+    // Hemos ganado?
+    console.log(STATE.movie, STATE.movieGuess);
+
+    if (STATE.movie == STATE.movieGuess) {
+        const audio = new Audio('../sounds/win.wav');
+        audio.play();
+        DOM.showWinnerMessage();
     }
 
     DOM.updateGuessedWord(STATE.movieGuess);
